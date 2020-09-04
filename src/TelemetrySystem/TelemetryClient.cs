@@ -2,7 +2,7 @@ using System;
 
 namespace TDDMicroExercises.TelemetrySystem
 {
-	public class TelemetryClient
+	public class TelemetryClient : ITelemetryClient
 	{
         //
         // The communication with the server is simulated in this implementation.
@@ -83,9 +83,9 @@ namespace TDDMicroExercises.TelemetrySystem
                     + "Remote Rtrn Count........... 00";
 
                 _diagnosticMessageJustSent = false;
-			} 
+			}
 			else
-			{                
+			{
 				// Simulate the reception of a response message returning a random message.
 				message = string.Empty;
                 int messageLength = _randomMessageSimulator.Next(50, 110);
