@@ -1,18 +1,25 @@
-
 using System;
+using Microsoft.Extensions.DependencyInjection;
+using TDDMicroExercises.Base;
 
 namespace TDDMicroExercises.TelemetrySystem
 {
-    public class TelemetryDiagnosticControls
+    public class TelemetryDiagnosticControls : LogicBase, ITelemetryDiagnosticControls
     {
         private const string DiagnosticChannelConnectionString = "*111#";
-        
-        private readonly TelemetryClient _telemetryClient;
+
+        private readonly ITelemetryClient _telemetryClient;
         private string _diagnosticInfo = string.Empty;
 
+        public TelemetryDiagnosticControls(ITelemetryClient telemetryClient)
+        {
+            _telemetryClient = telemetryClient;
+        }
+
+        [Obsolete("Use DI to inject TDDMicroExercises.TelemetrySystem.ITelemetryDiagnosticControls")]
         public TelemetryDiagnosticControls()
         {
-            _telemetryClient = new TelemetryClient();
+            _telemetryClient = ServiceProvider.GetService<ITelemetryClient>();
         }
 
         public string DiagnosticInfo
@@ -33,7 +40,7 @@ namespace TDDMicroExercises.TelemetrySystem
                 _telemetryClient.Connect(DiagnosticChannelConnectionString);
                 retryLeft -= 1;
             }
-             
+
             if(_telemetryClient.OnlineStatus == false)
             {
                 throw new Exception("Unable to connect.");
