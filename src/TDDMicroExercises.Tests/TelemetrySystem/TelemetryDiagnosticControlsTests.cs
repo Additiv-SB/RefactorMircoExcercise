@@ -35,15 +35,29 @@ namespace TDDMicroExercises.Tests.TelemetrySystem
 
         #region tests for refactored code
         [Fact]
-        public void CheckTransmission_WhenTelemetryClientConnectionThrowsArgumentNullException_ThrowsArgumentNullException()
+        public void CheckTransmission_WhenTelemetryClientDisconnectThrowsException_ThrowsException()
         {
-            var expectedExceptionMessage = "Value cannot be null.";
+            var expectedExceptionMessage = "Test exception";
             var mockedTelemetryClient = new Mock<ITelemetryClient>();
-            mockedTelemetryClient.Setup(x => x.Connect(It.IsAny<string>())).Throws(new ArgumentNullException());
+            mockedTelemetryClient.Setup(x => x.Disconnect()).Throws(new Exception(expectedExceptionMessage));
 
             ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
 
-            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(telemetryDiagnosticControls.CheckTransmission);
+            Exception exception = Assert.Throws<Exception>(telemetryDiagnosticControls.CheckTransmission);
+
+            exception.Message.Should().Be(expectedExceptionMessage);
+        }
+
+        [Fact]
+        public void CheckTransmission_WhenTelemetryClientConnectThrowsException_ThrowsException()
+        {
+            var expectedExceptionMessage = "Test exception";
+            var mockedTelemetryClient = new Mock<ITelemetryClient>();
+            mockedTelemetryClient.Setup(x => x.Connect(It.IsAny<string>())).Throws(new Exception(expectedExceptionMessage));
+
+            ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
+
+            Exception exception = Assert.Throws<Exception>(telemetryDiagnosticControls.CheckTransmission);
 
             exception.Message.Should().Be(expectedExceptionMessage);
         }
@@ -62,23 +76,22 @@ namespace TDDMicroExercises.Tests.TelemetrySystem
         }
         
         [Fact]
-        public void CheckTransmission_WhenTelemetryClientSendThrows_ThrowsArgumnetNullException()
+        public void CheckTransmission_WhenTelemetryClientSendThrows_ThrowsException()
         {
-            var parameterName = "telemetryServerConnectionString";
-            var expectedExceptionMessage = $"Value cannot be null.\r\nParameter name: {parameterName}";
+            var expectedExceptionMessage = $"Test exception";
             var mockedTelemetryClient = new Mock<ITelemetryClient>();
             mockedTelemetryClient.Setup(x => x.OnlineStatus).Returns(true);
             mockedTelemetryClient.Setup(x => x.Send(It.IsAny<string>()))
-                .Throws(new ArgumentNullException(parameterName));
+                .Throws(new Exception(expectedExceptionMessage));
             ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
             
-            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(telemetryDiagnosticControls.CheckTransmission);
+            Exception exception = Assert.Throws<Exception>(telemetryDiagnosticControls.CheckTransmission);
             
             exception.Message.Should().Be(expectedExceptionMessage);
         }
 
         [Fact]
-        public void CheckTransmission_WhenTelemetryClientReceiveThrows_ThrowsArgumnetNullException()
+        public void CheckTransmission_WhenTelemetryClientReceiveThrows_ThrowsException()
         {
             var expectedExceptionMessage = "expectedExceptionMessage exception";
             var mockedTelemetryClient = new Mock<ITelemetryClient>();

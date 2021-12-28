@@ -2,7 +2,7 @@
 {
     public interface ITelemetryDiagnosticControls
     {
-        string DiagnosticInfo { get;set; }
+        string DiagnosticInfo { get; set; }
         void CheckTransmission();
     }
 }

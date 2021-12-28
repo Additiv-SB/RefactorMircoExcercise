@@ -5,7 +5,6 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
     public class Alarm : IAlarm
     {
         private readonly ISensor _sensor;
-        private bool _alarmOn = false;
 
         public Alarm()
         {
@@ -23,14 +22,10 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
 
             if (psiPressureValue < PressureConfiguration.LowPressureThreshold || PressureConfiguration.HighPressureThreshold < psiPressureValue)
             {
-                _alarmOn = true;
+                AlarmOn = true;
             }
         }
 
-        public bool AlarmOn
-        {
-            get { return _alarmOn; }
-        }
-
+        public bool AlarmOn { get; private set; }
     }
 }

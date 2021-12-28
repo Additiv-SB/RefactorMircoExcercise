@@ -5,20 +5,16 @@ namespace TDDMicroExercises.TelemetrySystem
 {
 	public class TelemetryClient : ITelemetryClient
 	{
-        //
-        // The communication with the server is simulated in this implementation.
-        // Because the focus of the exercise is on the other class.
-        //
-		private bool _onlineStatus;
+		//
+		// The communication with the server is simulated in this implementation.
+		// Because the focus of the exercise is on the other class.
+		//
 		private bool _diagnosticMessageJustSent = false;
 
-        private readonly Random _connectionEventsSimulator = new Random();
-        private readonly Random _randomMessageSimulator = new Random();
-		
-		public bool OnlineStatus
-		{
-			get { return _onlineStatus; }
-		}
+		private readonly Random _connectionEventsSimulator = new Random();
+		private readonly Random _randomMessageSimulator = new Random();
+
+		public bool OnlineStatus { get;  private set; }
 
 		public void Connect(string telemetryServerConnectionString)
 		{
@@ -30,13 +26,13 @@ namespace TDDMicroExercises.TelemetrySystem
 			// Fake the connection with 20% chances of success
 			bool success = _connectionEventsSimulator.Next(1, 10) <= 2;
 
-			_onlineStatus = success;
+			OnlineStatus = success;
 
 		}
 
 		public void Disconnect()
 		{
-			_onlineStatus = false;
+			OnlineStatus = false;
 		}
 
 		public void Send(string message)
@@ -83,17 +79,24 @@ namespace TDDMicroExercises.TelemetrySystem
                 _diagnosticMessageJustSent = false;
 			} 
 			else
-			{                
+			{
 				// Simulate the reception of a response message returning a random message.
-				message = string.Empty;
-                int messageLength = _randomMessageSimulator.Next(50, 110);
-				for(int i = messageLength; i > 0; --i)
-				{
-                    message += (char)_randomMessageSimulator.Next(40, 126);
-				}
+				message = GetSimulatedDiagnosticMessage();
 			}
 
 			return message;
 		}
+
+		private string GetSimulatedDiagnosticMessage()
+        {
+            int messageLength = _randomMessageSimulator.Next(50, 110);
+			var returnedMessage = string.Empty;
+
+			for (int i = messageLength; i > 0; --i)
+			{
+                returnedMessage += (char)_randomMessageSimulator.Next(40, 126);
+			}
+			return returnedMessage;
+        }
 	}
 }
