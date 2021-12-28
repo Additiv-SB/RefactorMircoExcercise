@@ -8,5 +8,10 @@ namespace TDDMicroExercises.TurnTicketDispenser
         {
             return _turnNumber++;
         }
+
+        public static void Reset()
+        {
+            _turnNumber = 0;
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace Tests
         [TestCase(new [] { @"<", "", null, "a" }, @"&lt;<br /><br />")]
         public void ConvertToHtml_SuccessfulReadingFromFile(string[] input, string expectedResult)
         {
+            // Arrange
             var setupSequence = _mockReader.SetupSequence(reader => reader.ReadLine());
             foreach (var line in input)
             {
@@ -26,8 +27,10 @@ namespace Tests
 
             var converter = new UnicodeFileToHtmlTextConverter("xxx.logs");
             
+            // Act
             var html = converter.ConvertToHtml(_mockReader.Object);
             
+            // Assert
             Assert.AreEqual(expectedResult, html);
         }
 
@@ -35,11 +38,14 @@ namespace Tests
         [TestCase(typeof(ArgumentNullException), null)]
         [TestCase(typeof(FileNotFoundException), "notExistingFilepath")]
         [TestCase(typeof(ArgumentException), "")]
-        public void ConvertToHtml_FilepathArgument(Type exceptionType, string filePath)
+        public void ConvertToHtml_IsNotValidFilepathArgument_ShouldTrowException(Type exceptionType, string filePath)
         {
+            // Arrange
+            var converter = new UnicodeFileToHtmlTextConverter(filePath);
+
+            // Act & Assert
             Assert.Catch(exceptionType, () =>
             {
-                var converter = new UnicodeFileToHtmlTextConverter(filePath);
                 converter.ConvertToHtml();
             }, $"Filepath is {filePath ?? "null"}. Expected: {exceptionType.FullName}");
         }
