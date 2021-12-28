@@ -1,44 +1,38 @@
 using System;
+using TDDMicroExercises.TelemetrySystem.Interfaces;
 
 namespace TDDMicroExercises.TelemetrySystem
 {
-	public class TelemetryClient
+	public class TelemetryClient : ITelemetryClient
 	{
-        //
-        // The communication with the server is simulated in this implementation.
-        // Because the focus of the exercise is on the other class.
-        //
-
-		public const string DiagnosticMessage = "AT#UD";
-
-		private bool _onlineStatus;
+		//
+		// The communication with the server is simulated in this implementation.
+		// Because the focus of the exercise is on the other class.
+		//
 		private bool _diagnosticMessageJustSent = false;
 
-        private readonly Random _connectionEventsSimulator = new Random();
-        private readonly Random _randomMessageSimulator = new Random();
+		private readonly Random _connectionEventsSimulator = new Random();
+		private readonly Random _randomMessageSimulator = new Random();
 
-		public bool OnlineStatus
-		{
-			get { return _onlineStatus; }
-		}
+		public bool OnlineStatus { get;  private set; }
 
 		public void Connect(string telemetryServerConnectionString)
 		{
 			if (string.IsNullOrEmpty(telemetryServerConnectionString))
 			{
-				throw new ArgumentNullException();
+				throw new ArgumentNullException(nameof(telemetryServerConnectionString));
 			}
 
 			// Fake the connection with 20% chances of success
 			bool success = _connectionEventsSimulator.Next(1, 10) <= 2;
 
-			_onlineStatus = success;
+			OnlineStatus = success;
 
 		}
 
 		public void Disconnect()
 		{
-			_onlineStatus = false;
+			OnlineStatus = false;
 		}
 
 		public void Send(string message)
@@ -50,7 +44,7 @@ namespace TDDMicroExercises.TelemetrySystem
 
             // The simulation of Send() actually just remember if the last message sent was a diagnostic message.
             // This information will be used to simulate the Receive(). Indeed there is no real server listening.
-            if (message == DiagnosticMessage)
+            if (message == TelemetryDiagnosticConfiguration.DiagnosticMessage)
 			{
 			    _diagnosticMessageJustSent = true;
 			}
@@ -85,17 +79,24 @@ namespace TDDMicroExercises.TelemetrySystem
                 _diagnosticMessageJustSent = false;
 			} 
 			else
-			{                
+			{
 				// Simulate the reception of a response message returning a random message.
-				message = string.Empty;
-                int messageLength = _randomMessageSimulator.Next(50, 110);
-				for(int i = messageLength; i > 0; --i)
-				{
-                    message += (char)_randomMessageSimulator.Next(40, 126);
-				}
+				message = GetSimulatedDiagnosticMessage();
 			}
 
 			return message;
 		}
+
+		private string GetSimulatedDiagnosticMessage()
+        {
+            int messageLength = _randomMessageSimulator.Next(50, 110);
+			var returnedMessage = string.Empty;
+
+			for (int i = messageLength; i > 0; --i)
+			{
+                returnedMessage += (char)_randomMessageSimulator.Next(40, 126);
+			}
+			return returnedMessage;
+        }
 	}
 }
