@@ -37,94 +37,65 @@ namespace TDDMicroExercises.Tests.TelemetrySystem
         [Fact]
         public void CheckTransmission_WhenTelemetryClientConnectionThrowsArgumentNullException_ThrowsArgumentNullException()
         {
-            string expectedExceptionMessage = "Value cannot be null.";
-            Mock<ITelemetryClient> mockedTelemetryClient = new Mock<ITelemetryClient>();
+            var expectedExceptionMessage = "Value cannot be null.";
+            var mockedTelemetryClient = new Mock<ITelemetryClient>();
             mockedTelemetryClient.Setup(x => x.Connect(It.IsAny<string>())).Throws(new ArgumentNullException());
 
-            TelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
+            ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
 
-            try
-            {
-                telemetryDiagnosticControls.CheckTransmission();
-                Assert.True(false, "Exception should be thrown");
-            }
-            catch (Exception ex)
-            {
-                ex.GetType().Should().Be(typeof(ArgumentNullException));
-                ex.Message.Should().Be(expectedExceptionMessage);
-            }
+            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(telemetryDiagnosticControls.CheckTransmission);
+
+            exception.Message.Should().Be(expectedExceptionMessage);
         }
 
         [Fact]
         public void CheckTransmission_WhenTelemetryClientOnlineStatusIsFalse_ThrowsException()
         {
-            string expectedExceptionMessage = "Unable to connect.";
-            Mock<ITelemetryClient> mockedTelemetryClient = new Mock<ITelemetryClient>();
+            var expectedExceptionMessage = "Unable to connect.";
+            var mockedTelemetryClient = new Mock<ITelemetryClient>();
             mockedTelemetryClient.Setup(x => x.OnlineStatus).Returns(false);
             ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
-            
-            try
-            {
-                telemetryDiagnosticControls.CheckTransmission();
-                Assert.True(false, "Exception should be thrown");
-            }
-            catch (Exception ex)
-            {
-                ex.GetType().Should().Be(typeof(Exception));
-                ex.Message.Should().Be(expectedExceptionMessage);
-            }
+
+            Exception exception = Assert.Throws<Exception>(telemetryDiagnosticControls.CheckTransmission);
+
+            exception.Message.Should().Be(expectedExceptionMessage);
         }
         
         [Fact]
         public void CheckTransmission_WhenTelemetryClientSendThrows_ThrowsArgumnetNullException()
         {
-            string parameterName = "telemetryServerConnectionString";
-            string expectedExceptionMessage = $"Value cannot be null.\r\nParameter name: {parameterName}";
-            Mock<ITelemetryClient> mockedTelemetryClient = new Mock<ITelemetryClient>();
+            var parameterName = "telemetryServerConnectionString";
+            var expectedExceptionMessage = $"Value cannot be null.\r\nParameter name: {parameterName}";
+            var mockedTelemetryClient = new Mock<ITelemetryClient>();
             mockedTelemetryClient.Setup(x => x.OnlineStatus).Returns(true);
             mockedTelemetryClient.Setup(x => x.Send(It.IsAny<string>()))
                 .Throws(new ArgumentNullException(parameterName));
             ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
             
-            try
-            {
-                telemetryDiagnosticControls.CheckTransmission();
-                Assert.True(false, "Exception should be thrown");
-            }
-            catch (Exception ex)
-            {
-                ex.GetType().Should().Be(typeof(ArgumentNullException));
-                ex.Message.Should().Be(expectedExceptionMessage);
-            }
+            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(telemetryDiagnosticControls.CheckTransmission);
+            
+            exception.Message.Should().Be(expectedExceptionMessage);
         }
 
         [Fact]
         public void CheckTransmission_WhenTelemetryClientReceiveThrows_ThrowsArgumnetNullException()
         {
-            string parameterName = "telemetryServerConnectionString";
-            string expectedExceptionMessage = "expectedExceptionMessage exception";
-            Mock<ITelemetryClient> mockedTelemetryClient = new Mock<ITelemetryClient>();
+            var expectedExceptionMessage = "expectedExceptionMessage exception";
+            var mockedTelemetryClient = new Mock<ITelemetryClient>();
             mockedTelemetryClient.Setup(x => x.OnlineStatus).Returns(true);
             mockedTelemetryClient.Setup(x => x.Receive())
                 .Throws(new Exception(expectedExceptionMessage));
             ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
 
-            try
-            {
-                telemetryDiagnosticControls.CheckTransmission();
-                Assert.True(false, "Exception should be thrown");
-            }
-            catch (Exception ex)
-            {
-                ex.GetType().Should().Be(typeof(Exception));
-                ex.Message.Should().Be(expectedExceptionMessage);
-            }
+            Exception exception = Assert.Throws<Exception>(telemetryDiagnosticControls.CheckTransmission);
+
+            exception.Message.Should().Be(expectedExceptionMessage);
         }
 
         [Fact]
         public void CheckTransmission_WhenTelemetryClientOnlineStatusIsTrueAfterFirstCall_ReturnsExpectedMessage()
         {
-            string expectedMessage = "LAST TX rate................ 100 MBPS\r\n"
+            var expectedMessage = "LAST TX rate................ 100 MBPS\r\n"
                     + "HIGHEST TX rate............. 100 MBPS\r\n"
                     + "LAST RX rate................ 100 MBPS\r\n"
                     + "HIGHEST RX rate............. 100 MBPS\r\n"
@@ -157,7 +128,7 @@ namespace TDDMicroExercises.Tests.TelemetrySystem
         [Fact]
         public void CheckTransmission_WhenTelemetryClientOnlineStatusIsTrueAfterSecondCall_ReturnsExpectedMessage()
         {
-            string expectedMessage = "LAST TX rate................ 100 MBPS\r\n"
+            var expectedMessage = "LAST TX rate................ 100 MBPS\r\n"
                     + "HIGHEST TX rate............. 100 MBPS\r\n"
                     + "LAST RX rate................ 100 MBPS\r\n"
                     + "HIGHEST RX rate............. 100 MBPS\r\n"
@@ -191,7 +162,7 @@ namespace TDDMicroExercises.Tests.TelemetrySystem
         [Fact]
         public void CheckTransmission_WhenTelemetryClientOnlineStatusIsTrueAfterThirdCall_ReturnsExpectedMessage()
         {
-            string expectedMessage = "LAST TX rate................ 100 MBPS\r\n"
+            var expectedMessage = "LAST TX rate................ 100 MBPS\r\n"
                     + "HIGHEST TX rate............. 100 MBPS\r\n"
                     + "LAST RX rate................ 100 MBPS\r\n"
                     + "HIGHEST RX rate............. 100 MBPS\r\n"
