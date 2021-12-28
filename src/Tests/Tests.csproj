@@ -63,6 +63,7 @@
         <Compile Include="AlarmTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="TicketDispenserTests.cs" />
+        <Compile Include="UnicodeFileToHtmlTextConverterTests.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\TDDMicroExercises.csproj">
