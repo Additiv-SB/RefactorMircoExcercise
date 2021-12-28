@@ -35,7 +35,7 @@ namespace Tests
         [TestCase(typeof(ArgumentNullException), null)]
         [TestCase(typeof(FileNotFoundException), "notExistingFilepath")]
         [TestCase(typeof(ArgumentException), "")]
-        public void ConvertToHtml_FilepathArgument(Type exceptionType, string filePath)
+        public void ConvertToHtml_IsNotValidFilepathArgument_ShouldTrowException(Type exceptionType, string filePath)
         {
             Assert.Catch(exceptionType, () =>
             {

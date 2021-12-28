@@ -66,6 +66,10 @@
         <Compile Include="UnicodeFileToHtmlTextConverterTests.cs" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\src\TDDMicroExercises.csproj">
+        <Project>{bbcf3c67-8e31-48e3-ad2e-8c605e2e07be}</Project>
+        <Name>TDDMicroExercises</Name>
+      </ProjectReference>
       <ProjectReference Include="..\TDDMicroExercises.csproj">
         <Project>{bbcf3c67-8e31-48e3-ad2e-8c605e2e07be}</Project>
         <Name>TDDMicroExercises</Name>
