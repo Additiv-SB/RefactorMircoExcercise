@@ -13,7 +13,10 @@ namespace Tests
         [Test]
         public void AlarmOn_DefaultValue_ShouldBeFalse()
         {
+            // Arrange & Act
             var alarm = new Alarm();
+            
+            // Assert
             Assert.IsFalse(alarm.AlarmOn);
         }
 
@@ -23,6 +26,7 @@ namespace Tests
         [TestCase(5, 10, 10)]
         public void Check_WithValueInValidRange_ShouldBeAlarmOnFalse(double minVal, double maxVal, double sensorValue)
         {
+            // Arrange
             _mockSensor
                 .Setup(sensor => sensor.PopNextPressurePsiValue())
                 .Returns(sensorValue);
@@ -33,8 +37,10 @@ namespace Tests
                 HighPressureThreshold = maxVal
             });
             
+            // Act
             alarm.Check();
             
+            // Assert
             Assert.IsFalse(alarm.AlarmOn);
         }
         
@@ -43,6 +49,7 @@ namespace Tests
         [TestCase(5, 10, 11)]
         public void Check_WithValueOutOfValidRange_ShouldBeAlarmOnTrue(double minVal, double maxVal, double sensorValue)
         {
+            // Arrange
             _mockSensor
                 .Setup(sensor => sensor.PopNextPressurePsiValue())
                 .Returns(sensorValue);
@@ -53,14 +60,17 @@ namespace Tests
                 HighPressureThreshold = maxVal
             });
             
+            // Act
             alarm.Check();
             
+            // Assert
             Assert.IsTrue(alarm.AlarmOn);
         }
 
         [Test]
         public void Check_SensorException()
         {
+            // Arrange
             var exception = new Exception("Sensor exception");
             
             _mockSensor
@@ -71,10 +81,12 @@ namespace Tests
 
             try
             {
+                // Act
                 alarm.Check();
             }
             catch (Exception ex)
             {
+                // Assert
                 Assert.AreSame(exception, ex);
             }
         }
