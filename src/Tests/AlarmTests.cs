@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NUnit.Framework;
 using TDDMicroExercises.TirePressureMonitoringSystem;
 
@@ -38,6 +39,27 @@ namespace Tests
             alarm.Check();
             
             Assert.AreEqual(expectedResult,alarm.AlarmOn, errorMessage);
+        }
+
+        [Test]
+        public void Check_SensorException()
+        {
+            var exception = new Exception("Sensor exception");
+            
+            _mockSensor
+                .Setup(sensor => sensor.PopNextPressurePsiValue())
+                .Throws(exception);
+
+            var alarm = new Alarm(_mockSensor.Object, new AlarmConfiguration());
+
+            try
+            {
+                alarm.Check();
+            }
+            catch (Exception ex)
+            {
+                Assert.AreSame(exception, ex);
+            }
         }
 
         #region ErrorMessage constants
