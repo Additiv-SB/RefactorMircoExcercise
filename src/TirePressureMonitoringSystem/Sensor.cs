@@ -1,8 +1,9 @@
 using System;
+using TDDMicroExercises.TirePressureMonitoringSystem.Interfaces;
 
 namespace TDDMicroExercises.TirePressureMonitoringSystem
 {
-    public class Sensor
+    public class Sensor : ISensor
     {
         //
         // The reading of the pressure value from the sensor is simulated in this implementation.
