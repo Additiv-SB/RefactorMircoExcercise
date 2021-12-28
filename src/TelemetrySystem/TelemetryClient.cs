@@ -1,22 +1,20 @@
 using System;
+using TDDMicroExercises.TelemetrySystem.Interfaces;
 
 namespace TDDMicroExercises.TelemetrySystem
 {
-	public class TelemetryClient
+	public class TelemetryClient : ITelemetryClient
 	{
         //
         // The communication with the server is simulated in this implementation.
         // Because the focus of the exercise is on the other class.
         //
-
-		public const string DiagnosticMessage = "AT#UD";
-
 		private bool _onlineStatus;
 		private bool _diagnosticMessageJustSent = false;
 
         private readonly Random _connectionEventsSimulator = new Random();
         private readonly Random _randomMessageSimulator = new Random();
-
+		
 		public bool OnlineStatus
 		{
 			get { return _onlineStatus; }
@@ -26,7 +24,7 @@ namespace TDDMicroExercises.TelemetrySystem
 		{
 			if (string.IsNullOrEmpty(telemetryServerConnectionString))
 			{
-				throw new ArgumentNullException();
+				throw new ArgumentNullException(nameof(telemetryServerConnectionString));
 			}
 
 			// Fake the connection with 20% chances of success
@@ -50,7 +48,7 @@ namespace TDDMicroExercises.TelemetrySystem
 
             // The simulation of Send() actually just remember if the last message sent was a diagnostic message.
             // This information will be used to simulate the Receive(). Indeed there is no real server listening.
-            if (message == DiagnosticMessage)
+            if (message == TelemetryDiagnosticConfiguration.DiagnosticMessage)
 			{
 			    _diagnosticMessageJustSent = true;
 			}

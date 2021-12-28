@@ -34,29 +34,194 @@ namespace TDDMicroExercises.Tests.TelemetrySystem
         #endregion
 
         #region tests for refactored code
-
         [Fact]
         public void CheckTransmission_WhenTelemetryClientConnectionThrowsArgumentNullException_ThrowsArgumentNullException()
         {
-            var expectedExcMessage = "expected message";
-            var mockedTelemetryClient = new Mock<ITelemetryClient>();
-            mockedTelemetryClient.Setup(x => x.Connect(It.IsAny<string>())).Throws(new ArgumentNullException(expectedExcMessage));
-            
+            string expectedExceptionMessage = "Value cannot be null.";
+            Mock<ITelemetryClient> mockedTelemetryClient = new Mock<ITelemetryClient>();
+            mockedTelemetryClient.Setup(x => x.Connect(It.IsAny<string>())).Throws(new ArgumentNullException());
+
             TelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
+
+            try
+            {
+                telemetryDiagnosticControls.CheckTransmission();
+                Assert.True(false, "Exception should be thrown");
+            }
+            catch (Exception ex)
+            {
+                ex.GetType().Should().Be(typeof(ArgumentNullException));
+                ex.Message.Should().Be(expectedExceptionMessage);
+            }
+        }
+
+        [Fact]
+        public void CheckTransmission_WhenTelemetryClientOnlineStatusIsFalse_ThrowsException()
+        {
+            string expectedExceptionMessage = "Unable to connect.";
+            Mock<ITelemetryClient> mockedTelemetryClient = new Mock<ITelemetryClient>();
+            mockedTelemetryClient.Setup(x => x.OnlineStatus).Returns(false);
+            ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
             
             try
             {
                 telemetryDiagnosticControls.CheckTransmission();
-                Assert.NotNull("Exception should be thrown");
+                Assert.True(false, "Exception should be thrown");
             }
-            catch(ArgumentNullException ex)
+            catch (Exception ex)
             {
-                telemetryDiagnosticControls;
+                ex.GetType().Should().Be(typeof(Exception));
+                ex.Message.Should().Be(expectedExceptionMessage);
             }
-
-
+        }
+        
+        [Fact]
+        public void CheckTransmission_WhenTelemetryClientSendThrows_ThrowsArgumnetNullException()
+        {
+            string parameterName = "telemetryServerConnectionString";
+            string expectedExceptionMessage = $"Value cannot be null.\r\nParameter name: {parameterName}";
+            Mock<ITelemetryClient> mockedTelemetryClient = new Mock<ITelemetryClient>();
+            mockedTelemetryClient.Setup(x => x.OnlineStatus).Returns(true);
+            mockedTelemetryClient.Setup(x => x.Send(It.IsAny<string>()))
+                .Throws(new ArgumentNullException(parameterName));
+            ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
+            
+            try
+            {
+                telemetryDiagnosticControls.CheckTransmission();
+                Assert.True(false, "Exception should be thrown");
+            }
+            catch (Exception ex)
+            {
+                ex.GetType().Should().Be(typeof(ArgumentNullException));
+                ex.Message.Should().Be(expectedExceptionMessage);
+            }
         }
 
+        [Fact]
+        public void CheckTransmission_WhenTelemetryClientReceiveThrows_ThrowsArgumnetNullException()
+        {
+            string parameterName = "telemetryServerConnectionString";
+            string expectedExceptionMessage = "expectedExceptionMessage exception";
+            Mock<ITelemetryClient> mockedTelemetryClient = new Mock<ITelemetryClient>();
+            mockedTelemetryClient.Setup(x => x.OnlineStatus).Returns(true);
+            mockedTelemetryClient.Setup(x => x.Receive())
+                .Throws(new Exception(expectedExceptionMessage));
+            ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
+
+            try
+            {
+                telemetryDiagnosticControls.CheckTransmission();
+                Assert.True(false, "Exception should be thrown");
+            }
+            catch (Exception ex)
+            {
+                ex.GetType().Should().Be(typeof(Exception));
+                ex.Message.Should().Be(expectedExceptionMessage);
+            }
+        }
+
+        [Fact]
+        public void CheckTransmission_WhenTelemetryClientOnlineStatusIsTrueAfterFirstCall_ReturnsExpectedMessage()
+        {
+            string expectedMessage = "LAST TX rate................ 100 MBPS\r\n"
+                    + "HIGHEST TX rate............. 100 MBPS\r\n"
+                    + "LAST RX rate................ 100 MBPS\r\n"
+                    + "HIGHEST RX rate............. 100 MBPS\r\n"
+                    + "BIT RATE.................... 100000000\r\n"
+                    + "WORD LEN.................... 16\r\n"
+                    + "WORD/FRAME.................. 511\r\n"
+                    + "BITS/FRAME.................. 8192\r\n"
+                    + "MODULATION TYPE............. PCM/FM\r\n"
+                    + "TX Digital Los.............. 0.75\r\n"
+                    + "RX Digital Los.............. 0.10\r\n"
+                    + "BEP Test.................... -5\r\n"
+                    + "Local Rtrn Count............ 00\r\n"
+                    + "Remote Rtrn Count........... 00";
+            var mockedTelemetryClient = new Mock<ITelemetryClient>();
+            mockedTelemetryClient.SetupSequence(x => x.OnlineStatus)
+                .Returns(false)
+                .Returns(true)
+                .Returns(true);
+
+            mockedTelemetryClient.Setup(x => x.Receive()).Returns(expectedMessage);
+            ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
+            
+            telemetryDiagnosticControls.CheckTransmission();
+
+            mockedTelemetryClient.Verify(x => x.Connect(TelemetryDiagnosticConfiguration.DiagnosticChannelConnectionString), Times.Once);
+            mockedTelemetryClient.Verify(x => x.Send(TelemetryDiagnosticConfiguration.DiagnosticMessage), Times.Once);
+            telemetryDiagnosticControls.DiagnosticInfo.Should().Be(expectedMessage);
+        }
+        
+        [Fact]
+        public void CheckTransmission_WhenTelemetryClientOnlineStatusIsTrueAfterSecondCall_ReturnsExpectedMessage()
+        {
+            string expectedMessage = "LAST TX rate................ 100 MBPS\r\n"
+                    + "HIGHEST TX rate............. 100 MBPS\r\n"
+                    + "LAST RX rate................ 100 MBPS\r\n"
+                    + "HIGHEST RX rate............. 100 MBPS\r\n"
+                    + "BIT RATE.................... 100000000\r\n"
+                    + "WORD LEN.................... 16\r\n"
+                    + "WORD/FRAME.................. 511\r\n"
+                    + "BITS/FRAME.................. 8192\r\n"
+                    + "MODULATION TYPE............. PCM/FM\r\n"
+                    + "TX Digital Los.............. 0.75\r\n"
+                    + "RX Digital Los.............. 0.10\r\n"
+                    + "BEP Test.................... -5\r\n"
+                    + "Local Rtrn Count............ 00\r\n"
+                    + "Remote Rtrn Count........... 00";
+            var mockedTelemetryClient = new Mock<ITelemetryClient>();
+            mockedTelemetryClient.SetupSequence(x => x.OnlineStatus)
+                .Returns(false)
+                .Returns(false)
+                .Returns(true)
+                .Returns(true);
+
+            mockedTelemetryClient.Setup(x => x.Receive()).Returns(expectedMessage);
+            ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
+            
+            telemetryDiagnosticControls.CheckTransmission();
+
+            mockedTelemetryClient.Verify(x => x.Connect(TelemetryDiagnosticConfiguration.DiagnosticChannelConnectionString), Times.Exactly(2));
+            mockedTelemetryClient.Verify(x => x.Send(TelemetryDiagnosticConfiguration.DiagnosticMessage), Times.Once);
+            telemetryDiagnosticControls.DiagnosticInfo.Should().Be(expectedMessage);
+        }
+        
+        [Fact]
+        public void CheckTransmission_WhenTelemetryClientOnlineStatusIsTrueAfterThirdCall_ReturnsExpectedMessage()
+        {
+            string expectedMessage = "LAST TX rate................ 100 MBPS\r\n"
+                    + "HIGHEST TX rate............. 100 MBPS\r\n"
+                    + "LAST RX rate................ 100 MBPS\r\n"
+                    + "HIGHEST RX rate............. 100 MBPS\r\n"
+                    + "BIT RATE.................... 100000000\r\n"
+                    + "WORD LEN.................... 16\r\n"
+                    + "WORD/FRAME.................. 511\r\n"
+                    + "BITS/FRAME.................. 8192\r\n"
+                    + "MODULATION TYPE............. PCM/FM\r\n"
+                    + "TX Digital Los.............. 0.75\r\n"
+                    + "RX Digital Los.............. 0.10\r\n"
+                    + "BEP Test.................... -5\r\n"
+                    + "Local Rtrn Count............ 00\r\n"
+                    + "Remote Rtrn Count........... 00";
+            var mockedTelemetryClient = new Mock<ITelemetryClient>();
+            mockedTelemetryClient.SetupSequence(x => x.OnlineStatus)
+                .Returns(false)
+                .Returns(false)
+                .Returns(false)
+                .Returns(true)
+                .Returns(true);
+
+            mockedTelemetryClient.Setup(x => x.Receive()).Returns(expectedMessage);
+            ITelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(mockedTelemetryClient.Object);
+            
+            telemetryDiagnosticControls.CheckTransmission();
+
+            mockedTelemetryClient.Verify(x => x.Connect(TelemetryDiagnosticConfiguration.DiagnosticChannelConnectionString), Times.Exactly(3));
+            mockedTelemetryClient.Verify(x => x.Send(TelemetryDiagnosticConfiguration.DiagnosticMessage), Times.Once);
+            telemetryDiagnosticControls.DiagnosticInfo.Should().Be(expectedMessage);
+        }
         #endregion
     }
 }

@@ -42,8 +42,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TelemetrySystem\Interfaces\ITelemetryClient.cs" />
+    <Compile Include="TelemetrySystem\Interfaces\ITelemetryDiagnosticControls.cs" />
     <Compile Include="TelemetrySystem\TelemetryClient.cs" />
     <Compile Include="TelemetrySystem.Tests\TelemetryDiagnosticControlsTest.cs" />
+    <Compile Include="TelemetrySystem\TelemetryDiagnosticConfiguration.cs" />
     <Compile Include="TelemetrySystem\TelemetryDiagnosticControls.cs" />
     <Compile Include="TirePressureMonitoringSystem\Interfaces\IAlarm.cs" />
     <Compile Include="TirePressureMonitoringSystem\Alarm.cs" />
@@ -74,6 +77,7 @@
   <ItemGroup>
     <None Include="lib\nunit.framework.dll" />
     <None Include="lib\nunit.framework.xml" />
+    <Compile Include="TelemetrySystem\Interfaces\IConnectable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
