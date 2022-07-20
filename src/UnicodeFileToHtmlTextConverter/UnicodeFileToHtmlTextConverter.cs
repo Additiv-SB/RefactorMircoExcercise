@@ -5,17 +5,17 @@ namespace TDDMicroExercises.UnicodeFileToHtmlTextConverter
 {
     public class UnicodeFileToHtmlTextConverter
     {
-        private readonly string _fullFilenameWithPath;
+        private readonly IUnicodeTextSource _textSource;
 
 
         public UnicodeFileToHtmlTextConverter(string fullFilenameWithPath)
         {
-            _fullFilenameWithPath = fullFilenameWithPath;
+            _textSource = new UnicodeTextSourceFromFile(fullFilenameWithPath);
         }
 
         public string ConvertToHtml()
         {
-            using (TextReader unicodeFileStream = File.OpenText(_fullFilenameWithPath))
+            using (TextReader unicodeFileStream = _textSource.ConnectToFile())
             {
                 string html = string.Empty;
 

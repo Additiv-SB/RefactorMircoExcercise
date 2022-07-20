@@ -1,7 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDDMicroExercises", "TDDMicroExercises.csproj", "{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TirePressureMonitoringSystem.Tests", "..\TirePressureMonitoringSystem.Tests\TirePressureMonitoringSystem.Tests.csproj", "{A7EEFF7C-FB3D-4F70-B3DE-46479DA0E95C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnicodeFileToHtmlTextConverter.Tests", "..\ClassLibrary1\UnicodeFileToHtmlTextConverter.Tests.csproj", "{198EC520-6406-47EA-8110-FCBCEB5BD1D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,8 +19,19 @@ Global
 		{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7EEFF7C-FB3D-4F70-B3DE-46479DA0E95C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7EEFF7C-FB3D-4F70-B3DE-46479DA0E95C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7EEFF7C-FB3D-4F70-B3DE-46479DA0E95C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7EEFF7C-FB3D-4F70-B3DE-46479DA0E95C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{198EC520-6406-47EA-8110-FCBCEB5BD1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{198EC520-6406-47EA-8110-FCBCEB5BD1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{198EC520-6406-47EA-8110-FCBCEB5BD1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{198EC520-6406-47EA-8110-FCBCEB5BD1D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {301DF2EC-CCC4-4589-BA2E-A3E91596692F}
 	EndGlobalSection
 EndGlobal
