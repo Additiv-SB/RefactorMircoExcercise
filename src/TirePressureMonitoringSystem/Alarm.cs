@@ -1,28 +1,24 @@
+using TDDMicroExercises.Common;
+
 namespace TDDMicroExercises.TirePressureMonitoringSystem
 {
-    public class Alarm
+    internal sealed class Alarm : IAlarm
     {
-        private const double LowPressureThreshold = 17;
-        private const double HighPressureThreshold = 21;
+        private readonly ISensor _sensor;
+        private readonly AlarmConfiguration _alarmConfiguration;
 
-        readonly Sensor _sensor = new Sensor();
+        public Alarm(ISensor sensor, AlarmConfiguration alarmConfiguration) =>
+            (_sensor, _alarmConfiguration) = (sensor, alarmConfiguration);
 
-        bool _alarmOn = false;
+        public bool AlarmOn { get; private set; }
 
         public void Check()
         {
             double psiPressureValue = _sensor.PopNextPressurePsiValue();
 
-            if (psiPressureValue < LowPressureThreshold || HighPressureThreshold < psiPressureValue)
-            {
-                _alarmOn = true;
-            }
+            AlarmOn =
+                psiPressureValue < _alarmConfiguration.LowPressureThreshold ||
+                _alarmConfiguration.HighPressureThreshold < psiPressureValue;
         }
-
-        public bool AlarmOn
-        {
-            get { return _alarmOn; }
-        }
-
     }
 }

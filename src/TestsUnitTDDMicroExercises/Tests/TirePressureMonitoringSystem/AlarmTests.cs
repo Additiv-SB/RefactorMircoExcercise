@@ -1,61 +1,79 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using AutoFixture.NUnit3;
+﻿using AutoFixture;
+using AutoFixture.AutoMoq;
 using FluentAssertions;
 using FsCheck;
-using Microsoft.FSharp.Collections;
 using NUnit.Framework;
 using TDDMicroExercises.TirePressureMonitoringSystem;
 using TestsUnitTDDMicroExercises.Common.Fixtures;
 using TestsUnitTDDMicroExercises.Common.Generators;
-using Random = System.Random;
 
 namespace TestsUnitTDDMicroExercises.Tests.TirePressureMonitoringSystem
 {
     [TestFixture]
-    internal sealed class PressureAlarmTests : AlarmTests { }
-
-    [TestFixture]
-    internal abstract class AlarmTests
+    [Parallelizable]
+    internal sealed class AlarmTests
     {
-        private const double LowPressureThreshold = 17;
-        private const double HighPressureThreshold = 21;
+        private readonly IFixture _fixture;
+        private readonly double _lowPressureThreshold;
+        private readonly double _highPressureThreshold;
+
+        public AlarmTests()
+        {
+            _fixture = new Fixture().Customize(new AutoMoqCustomization());
+            (_lowPressureThreshold, _highPressureThreshold) = GeneratePressureThresholds();
+        }
+
+        private static (double lowPressureThreshold, double highPressureThreshold) GeneratePressureThresholds()
+        {
+            double lowPressureThreshold = new System.Random().NextDouble();
+            double highPressureThreshold = lowPressureThreshold * 2;
+
+            return (lowPressureThreshold, highPressureThreshold);
+        }
 
         [Test]
-        [AutoData]
         public void WhenPressureValueIsWithinAlarmTriggeringPressureRangeAlarmIsEnabled() =>
             Prop.ForAll(
-                PressureGenerator.OutsideOfRange(LowPressureThreshold, HighPressureThreshold),
+                PressureGenerator.OutsideOfRange(_lowPressureThreshold, _highPressureThreshold),
                 pressureValue =>
                 {
-                    // TODO: Provide pressure value to pressure alarm via mocked pressure sensor.
-                    Alarm alarm = PressureAlarmFixture.WithPressureBoundary(LowPressureThreshold, HighPressureThreshold);
+                    Alarm alarm = PressureAlarmFixture.WithPressureBoundary(
+                        _lowPressureThreshold,
+                        _highPressureThreshold,
+                        PressureSensorFixture.WithFixedPressureValue(pressureValue));
 
                     alarm.Check();
 
                     return alarm.AlarmOn;
-                });
+                }).QuickCheckThrowOnFailure();
 
         [Test]
         public void WhenPressureValueIsOutsideOfAlarmTriggeringPressureRangeAlarmIsNotEnabled() =>
             Prop.ForAll(
-                PressureGenerator.WithinRange(LowPressureThreshold, HighPressureThreshold),
+                PressureGenerator.WithinRange(_lowPressureThreshold, _highPressureThreshold),
                 pressureValue =>
                 {
-                    // TODO: Provide pressure value to pressure alarm via mocked pressure sensor.
-                    Alarm alarm = PressureAlarmFixture.WithPressureBoundary(LowPressureThreshold, HighPressureThreshold);
+                    Alarm alarm = PressureAlarmFixture.WithPressureBoundary(
+                        _lowPressureThreshold,
+                        _highPressureThreshold,
+                        PressureSensorFixture.WithFixedPressureValue(pressureValue));
 
                     alarm.Check();
 
                     return !alarm.AlarmOn;
-                });
+                }).QuickCheckThrowOnFailure();
 
-        [TestCase(LowPressureThreshold)]
-        [TestCase(HighPressureThreshold)]
-        public void WhenPressureValueIsOnLowerOrUpperAlarmTriggeringPressureValueAlarmIsNotEnabled(double edgePressureValue)
+        [TestCase(17, 21, 17)]
+        [TestCase(17, 21, 21)]
+        public void WhenPressureValueIsOnLowerOrUpperAlarmTriggeringPressureValueAlarmIsNotEnabled(
+            double lowPressureThreshold,
+            double highPressureThreshold,
+            double edgePressureValue)
         {
-            Alarm alarm = PressureAlarmFixture.WithPressureBoundary(LowPressureThreshold, HighPressureThreshold);
+            Alarm alarm = PressureAlarmFixture.WithPressureBoundary(
+                lowPressureThreshold,
+                highPressureThreshold,
+                PressureSensorFixture.WithFixedPressureValue(edgePressureValue));
 
             alarm.Check();
 
@@ -63,7 +81,7 @@ namespace TestsUnitTDDMicroExercises.Tests.TirePressureMonitoringSystem
         }
 
         [Test]
-        [AutoData]
-        public void AlarmIsNotEnabledByDefault(Alarm alarm) => alarm.AlarmOn.Should().BeFalse();
+        public void AlarmIsNotEnabledByDefault() =>
+            _fixture.Create<Alarm>().AlarmOn.Should().BeFalse();
     }
 }

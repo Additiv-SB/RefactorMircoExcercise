@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using FsCheck;
+﻿using FsCheck;
 
 namespace TestsUnitTDDMicroExercises.Common.Generators
 {
