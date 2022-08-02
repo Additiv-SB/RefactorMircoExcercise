@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDDMicroExercises", "TDDMicroExercises.csproj", "{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6A1BE507-4FE0-4A36-816E-8AC64A1C0A9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{4E43EEAE-0B30-43A6-8B1E-211B46E487D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsUnitTDDMicroExercises", "TestsUnitTDDMicroExercises\TestsUnitTDDMicroExercises.csproj", "{DF4FBDFC-4B70-40CF-9D2B-78A67C5BC0D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,8 +19,16 @@ Global
 		{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF4FBDFC-4B70-40CF-9D2B-78A67C5BC0D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF4FBDFC-4B70-40CF-9D2B-78A67C5BC0D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF4FBDFC-4B70-40CF-9D2B-78A67C5BC0D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF4FBDFC-4B70-40CF-9D2B-78A67C5BC0D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E43EEAE-0B30-43A6-8B1E-211B46E487D6} = {6A1BE507-4FE0-4A36-816E-8AC64A1C0A9C}
+		{DF4FBDFC-4B70-40CF-9D2B-78A67C5BC0D8} = {4E43EEAE-0B30-43A6-8B1E-211B46E487D6}
 	EndGlobalSection
 EndGlobal
