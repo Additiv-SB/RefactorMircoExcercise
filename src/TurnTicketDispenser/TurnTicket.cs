@@ -1,6 +1,6 @@
 namespace TDDMicroExercises.TurnTicketDispenser
 {
-    public class TurnTicket
+    public sealed class TurnTicket
     {
         private readonly int _turnNumber;
 

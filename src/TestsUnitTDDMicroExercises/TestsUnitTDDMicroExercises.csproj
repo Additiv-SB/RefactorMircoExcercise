@@ -101,6 +101,7 @@
     <ItemGroup>
         <Compile Include="Common\Fixtures\PressureAlarmFixture.cs" />
         <Compile Include="Common\Fixtures\PressureSensorFixture.cs" />
+        <Compile Include="Common\Fixtures\TicketNumberProviderFixture.cs" />
         <Compile Include="Common\Generators\PressureGenerator.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Tests\TirePressureMonitoringSystem\AlarmTests.cs" />

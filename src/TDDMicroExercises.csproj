@@ -51,7 +51,10 @@
     <Compile Include="TirePressureMonitoringSystem\IAlarm.cs" />
     <Compile Include="TirePressureMonitoringSystem\ISensor.cs" />
     <Compile Include="TirePressureMonitoringSystem\Sensor.cs" />
+    <Compile Include="TurnTicketDispenser\ITicketDispenser.cs" />
+    <Compile Include="TurnTicketDispenser\ITicketNumberProvider.cs" />
     <Compile Include="TurnTicketDispenser\TicketDispenser.cs" />
+    <Compile Include="TurnTicketDispenser\TicketNumberProvider.cs" />
     <Compile Include="TurnTicketDispenser\TurnNumberSequence.cs" />
     <Compile Include="TurnTicketDispenser\TurnTicket.cs" />
     <Compile Include="UnicodeFileToHtmlTextConverter\UnicodeFileToHtmlTextConverter.cs" />
