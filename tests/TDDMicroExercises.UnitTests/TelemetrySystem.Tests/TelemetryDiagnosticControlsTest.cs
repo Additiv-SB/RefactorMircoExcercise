@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace TDDMicroExercises.TelemetrySystem.Tests
+namespace TDDMicroExercises.UnitTests.TelemetrySystem.Tests
 {
     [TestFixture]
     public class TelemetryDiagnosticControlsTest

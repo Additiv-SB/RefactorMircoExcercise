@@ -1,7 +1,8 @@
 ﻿using Moq;
 using NUnit.Framework;
+using TDDMicroExercises.TirePressureMonitoringSystem;
 
-namespace TDDMicroExercises.TirePressureMonitoringSystem.Tests
+namespace TDDMicroExercises.UnitTests.TirePressureMonitoringSystem.Tests
 {
     public class AlarmTests
     {
