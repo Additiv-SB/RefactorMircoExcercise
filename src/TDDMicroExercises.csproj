@@ -79,6 +79,11 @@
     <Compile Include="TurnTicketDispenser\TicketDispenser.cs" />
     <Compile Include="TurnTicketDispenser\TurnNumberSequence.cs" />
     <Compile Include="TurnTicketDispenser\TurnTicket.cs" />
+    <Compile Include="UnicodeFileToHtmlTextConverter.IntegrationTests\FileTextReaderIntegrationTests.cs" />
+    <Compile Include="UnicodeFileToHtmlTextConverter.UnitTests\FileTextReaderUnitTests.cs" />
+    <Compile Include="UnicodeFileToHtmlTextConverter.UnitTests\UnicodeFileToHtmlTextConverterTests.cs" />
+    <Compile Include="UnicodeFileToHtmlTextConverter\Contracts\IFileTextReader.cs" />
+    <Compile Include="UnicodeFileToHtmlTextConverter\FileTextReader.cs" />
     <Compile Include="UnicodeFileToHtmlTextConverter\UnicodeFileToHtmlTextConverter.cs" />
     <Compile Include="TirePressureMonitoringSystem.SomeDependencies\ASensorClient.cs" />
     <Compile Include="TirePressureMonitoringSystem.SomeDependencies\AnAlarmClient1.cs" />
@@ -110,6 +115,11 @@
   <ItemGroup>
     <Analyzer Include="packages\xunit.analyzers.1.0.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
     <Analyzer Include="packages\xunit.analyzers.1.0.0\analyzers\dotnet\cs\xunit.analyzers.fixes.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UnicodeFileToHtmlTextConverter.IntegrationTests\TextFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

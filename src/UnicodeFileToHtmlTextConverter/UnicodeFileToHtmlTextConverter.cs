@@ -1,34 +1,31 @@
-using System.IO;
-using System.Web;
+using System.Linq;
+using System.Text;
+using TDDMicroExercises.UnicodeFileToHtmlTextConverter.Contracts;
 
 namespace TDDMicroExercises.UnicodeFileToHtmlTextConverter
 {
     public class UnicodeFileToHtmlTextConverter
     {
         private readonly string _fullFilenameWithPath;
+        private readonly IFileTextReader _fileTextReader;
 
-
-        public UnicodeFileToHtmlTextConverter(string fullFilenameWithPath)
+        public UnicodeFileToHtmlTextConverter(string fullFilenameWithPath) : this(fullFilenameWithPath,
+            new FileTextReader())
         {
             _fullFilenameWithPath = fullFilenameWithPath;
         }
 
+        public UnicodeFileToHtmlTextConverter(string fullFilenameWithPath, IFileTextReader fileTextReader)
+        {
+            _fullFilenameWithPath = fullFilenameWithPath;
+            _fileTextReader = fileTextReader;
+        }
+
         public string ConvertToHtml()
         {
-            using (TextReader unicodeFileStream = File.OpenText(_fullFilenameWithPath))
-            {
-                string html = string.Empty;
+            var lines = _fileTextReader.ReadAllLines(_fullFilenameWithPath);
 
-                string line = unicodeFileStream.ReadLine();
-                while (line != null)
-                {
-                    html += HttpUtility.HtmlEncode(line);
-                    html += "<br />";
-                    line = unicodeFileStream.ReadLine();
-                }
-
-                return html;
-            }
+            return lines.Aggregate(new StringBuilder(), (b, s) => b.Append(s + "<br />")).ToString();
         }
     }
 }
