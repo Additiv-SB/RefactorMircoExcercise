@@ -2,25 +2,18 @@ using System;
 
 namespace TDDMicroExercises.TelemetrySystem
 {
-	public class TelemetryClient
+	public class TelemetryClient : ITelemetryClient
 	{
         //
         // The communication with the server is simulated in this implementation.
         // Because the focus of the exercise is on the other class.
         //
-
-		public const string DiagnosticMessage = "AT#UD";
-
-		private bool _onlineStatus;
 		private bool _diagnosticMessageJustSent = false;
-
+		private bool _onlineStatus;
         private readonly Random _connectionEventsSimulator = new Random();
         private readonly Random _randomMessageSimulator = new Random();
 
-		public bool OnlineStatus
-		{
-			get { return _onlineStatus; }
-		}
+		public bool OnlineStatus { get { return _onlineStatus; } }
 
 		public void Connect(string telemetryServerConnectionString)
 		{
@@ -33,7 +26,6 @@ namespace TDDMicroExercises.TelemetrySystem
 			bool success = _connectionEventsSimulator.Next(1, 10) <= 2;
 
 			_onlineStatus = success;
-
 		}
 
 		public void Disconnect()
@@ -50,7 +42,7 @@ namespace TDDMicroExercises.TelemetrySystem
 
             // The simulation of Send() actually just remember if the last message sent was a diagnostic message.
             // This information will be used to simulate the Receive(). Indeed there is no real server listening.
-            if (message == DiagnosticMessage)
+            if (message == TelemetryConfiguration.DiagnosticMessage)
 			{
 			    _diagnosticMessageJustSent = true;
 			}

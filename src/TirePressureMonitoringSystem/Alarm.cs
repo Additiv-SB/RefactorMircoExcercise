@@ -19,7 +19,7 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
         {
             double psiPressureValue = _sensor.PopNextPressurePsiValue();
 
-            if (psiPressureValue < AlarmConfiguration.LowPressureTreshold || AlarmConfiguration.HighPressureThreshold < psiPressureValue)
+            if (psiPressureValue < AlarmConfiguration.LowPressureTreshold || psiPressureValue > AlarmConfiguration.HighPressureThreshold)
             {
                 AlarmOn = true;
             }
