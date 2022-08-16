@@ -22,7 +22,7 @@ namespace RefactorMicroExercise.Tests.TirePressureMonitoringSystem
         [InlineData(16, true)]
         [InlineData(22, true)]
         [InlineData(21.01, true)]
-        [InlineData(17.01, false)]
+        [InlineData(17.02, false)]
         public void Check_WhenSensorPoppedValidValu_ReturnsExpected(double sensorValue, bool expectedResult)
         {
             // Arrange
