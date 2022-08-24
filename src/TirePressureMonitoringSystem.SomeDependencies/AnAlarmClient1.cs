@@ -8,7 +8,9 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem.SomeDependencies
 		
         public AnAlarmClient1()
         {
-            Alarm anAlarm = new Alarm();
+            Sensor sensor = new Sensor();
+
+            Alarm anAlarm = new Alarm(sensor);
             anAlarm.Check();
             bool isAlarmOn = anAlarm.AlarmOn;
         }
