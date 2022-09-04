@@ -43,6 +43,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TelemetrySystem\Helper.cs" />
+    <Compile Include="TelemetrySystem\ITelemetryClient.cs" />
+    <Compile Include="TelemetrySystem\ITelemetryDiagnosticControlscs.cs" />
     <Compile Include="TelemetrySystem\TelemetryClient.cs" />
     <Compile Include="TelemetrySystem.Tests\TelemetryDiagnosticControlsTest.cs" />
     <Compile Include="TelemetrySystem\TelemetryDiagnosticControls.cs" />
@@ -54,6 +57,8 @@
     <Compile Include="TurnTicketDispenser\TicketDispenser.cs" />
     <Compile Include="TurnTicketDispenser\TurnNumberSequence.cs" />
     <Compile Include="TurnTicketDispenser\TurnTicket.cs" />
+    <Compile Include="UnicodeFileToHtmlTextConverter\ReadFile.cs" />
+    <Compile Include="UnicodeFileToHtmlTextConverter\IStreamReader.cs" />
     <Compile Include="UnicodeFileToHtmlTextConverter\UnicodeFileToHtmlTextConverter.cs" />
     <Compile Include="TirePressureMonitoringSystem.SomeDependencies\ASensorClient.cs" />
     <Compile Include="TirePressureMonitoringSystem.SomeDependencies\AnAlarmClient1.cs" />

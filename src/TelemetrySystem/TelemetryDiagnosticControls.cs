@@ -3,14 +3,17 @@ using System;
 
 namespace TDDMicroExercises.TelemetrySystem
 {
-    public class TelemetryDiagnosticControls
+    public class TelemetryDiagnosticControls : ITelemetryDiagnosticControls
     {
-        private const string DiagnosticChannelConnectionString = "*111#";
-        
-        private readonly TelemetryClient _telemetryClient;
+
+        private readonly ITelemetryClient _telemetryClient;
         private string _diagnosticInfo = string.Empty;
 
         public TelemetryDiagnosticControls()
+        {
+            _telemetryClient = new TelemetryClient();
+        }
+        public TelemetryDiagnosticControls(ITelemetryClient telemetryClient)
         {
             _telemetryClient = new TelemetryClient();
         }
@@ -30,16 +33,16 @@ namespace TDDMicroExercises.TelemetrySystem
             int retryLeft = 3;
             while (_telemetryClient.OnlineStatus == false && retryLeft > 0)
             {
-                _telemetryClient.Connect(DiagnosticChannelConnectionString);
+                _telemetryClient.Connect(Helper.DiagnosticChannelConnectionString);
                 retryLeft -= 1;
             }
-             
-            if(_telemetryClient.OnlineStatus == false)
+
+            if (_telemetryClient.OnlineStatus == false)
             {
                 throw new Exception("Unable to connect.");
             }
 
-            _telemetryClient.Send(TelemetryClient.DiagnosticMessage);
+            _telemetryClient.Send(Helper.DiagnosticMessage);
             _diagnosticInfo = _telemetryClient.Receive();
         }
     }

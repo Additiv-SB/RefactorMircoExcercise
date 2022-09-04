@@ -19,3 +19,9 @@ It states that the high-level module must not depend on the low-level module, bu
  I've made interfaces IAlarm and ISensor where those interfaces help us to have separate functions in the file, and every class depends on they abstractions.
 
 
+ Turn Ticket Dispenser
+
+S - Single responsibility
+Class should have only one purpose - So, Turn Ticket dispenser excercise has turn ticket, turnnumber sequence class and is 
+
+
