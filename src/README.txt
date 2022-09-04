@@ -22,6 +22,17 @@ It states that the high-level module must not depend on the low-level module, bu
  Turn Ticket Dispenser
 
 S - Single responsibility
-Class should have only one purpose - So, Turn Ticket dispenser excercise has turn ticket, turnnumber sequence class and is 
+Class should have only one purpose - So, Turn Ticket dispenser excercise has turn ticket, turnnumber sequence class have single responsibility
+
+UnicodeFileToHtmlConverter
+
+S - Class before refactoring has a multiple purpose to read html, convert it so I split it into 3 classes for single responsibilitz principle. 
+
+L- IStreamReader is based on stream reader class implemented deeply.
+DI - components depeneds on abstractions
 
 
+TelemetrySystem
+
+S, I and D - one class TelemtryClient and TelemetryDyagnosticControls have multiple purposes and dont depends on the apstractions so I Implement interfaces and split functions purposes
+now classes depends on the apstractions
