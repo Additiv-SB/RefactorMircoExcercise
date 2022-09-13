@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TDDMicroExcercisesTests.TirePressureMonitoringSystem.Tests
 {
-    public class AlarmUnitTest
+    public class AlarmUnitTests
     {
 
         [Theory]
