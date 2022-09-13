@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDDMicroExercises", "TDDMicroExercises.csproj", "{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDDMicroExcercisesTests", "..\TDDMicroExcercisesTests\TDDMicroExcercisesTests.csproj", "{A5372F13-3730-43B8-9E54-25A3FBF9A5D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBCF3C67-8E31-48E3-AD2E-8C605E2E07BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5372F13-3730-43B8-9E54-25A3FBF9A5D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5372F13-3730-43B8-9E54-25A3FBF9A5D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5372F13-3730-43B8-9E54-25A3FBF9A5D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5372F13-3730-43B8-9E54-25A3FBF9A5D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
