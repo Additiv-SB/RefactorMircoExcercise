@@ -1,11 +1,13 @@
-﻿namespace TDDMicroExercises.TelemetrySystem.SomeDependencies
+﻿using TDDMicroExercises.TelemetrySystem.Implementations;
+
+namespace TDDMicroExercises.TelemetrySystem.SomeDependencies
 {
     public class TelemetryClientClient
     {
-		// A class with the only goal of simulating a dependency on TelemetryClient
-		// that has impact on the refactoring.
+        // A class with the only goal of simulating a dependency on TelemetryClient
+        // that has impact on the refactoring.
 
-		public TelemetryClientClient()
+        public TelemetryClientClient()
         {
             var tc = new TelemetryClient();
             if (!tc.OnlineStatus)
