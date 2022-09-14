@@ -6,6 +6,13 @@ namespace TDDMicroExercises.TelemetrySystem.Implementations
 {
     public class TelemetryDiagnosticControls : ITelemetryDiagnosticControls
     {
+        /// <summary>
+        /// At first, provided solution did not satisfy the following SOLID principles:
+        /// 1. Open/Closed principle - TelemetryDiagnosticControls will change if ConnectionString were to change in the future.
+        /// 2. Interface segregation - TelemetryClient implements both connection closing/disposing and data transmission.
+        /// 3. Dependency Inversion - TelemetryDiagnosticControls was dependant on concrete TelemetryClient implementation, but should depend on a abstraction.
+        /// </summary>
+
         private readonly ITelemetryClient _telemetryClient;
         private readonly ITelemetryTransmitter _telemetryTransmitter;
         private string _diagnosticInfo = string.Empty;
