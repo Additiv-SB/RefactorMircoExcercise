@@ -29,10 +29,8 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem.Implementations
         {
             double psiPressureValue = _sensor.PopNextPressurePsiValue();
 
-            if (psiPressureValue < TirePressureMonitoringSystemConstants.LowPressureThreshold || TirePressureMonitoringSystemConstants.HighPressureThreshold < psiPressureValue)
-            {
-                _alarmOn = true;
-            }
+            _alarmOn = psiPressureValue < TirePressureMonitoringSystemConstants.LowPressureThreshold || TirePressureMonitoringSystemConstants.HighPressureThreshold < psiPressureValue;
+
         }
 
         public bool AlarmOn
