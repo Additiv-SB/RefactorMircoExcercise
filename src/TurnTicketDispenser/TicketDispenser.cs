@@ -1,6 +1,8 @@
+using TDDMicroExercises.TurnTicketDispenser.Interfaces;
+
 namespace TDDMicroExercises.TurnTicketDispenser
 {
-    public class TicketDispenser
+    public class TicketDispenser: ITicketDispenser
     {
         public TurnTicket GetTurnTicket()
         {
