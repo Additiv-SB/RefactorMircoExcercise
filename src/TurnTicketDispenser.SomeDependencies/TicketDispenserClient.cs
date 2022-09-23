@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Web.UI;
+
 namespace TDDMicroExercises.TurnTicketDispenser.SomeDependencies
 {
     public class TicketDispenserClient
@@ -8,9 +10,10 @@ namespace TDDMicroExercises.TurnTicketDispenser.SomeDependencies
 
 		public TicketDispenserClient()
         {
-			new TicketDispenser().GetTurnTicket();
-			new TicketDispenser().GetTurnTicket();
-			new TicketDispenser().GetTurnTicket();
+            var turnNumberSequence = TurnNumberSequence.Instance;
+			new TicketDispenser(turnNumberSequence).GetTurnTicket();
+			new TicketDispenser(turnNumberSequence).GetTurnTicket();
+			new TicketDispenser(turnNumberSequence).GetTurnTicket();
 		}
     }
 }

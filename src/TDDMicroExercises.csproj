@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy">
+      <HintPath>C:\packages\FakeItEasy.2.3.1\lib\net40\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
     <Reference Include="nunit.framework">
@@ -49,6 +52,7 @@
     <Compile Include="TirePressureMonitoringSystem\Sensor.cs" />
     <Compile Include="TurnTicketDispenser.Tests\TurnTicketDispenserTests.cs" />
     <Compile Include="TurnTicketDispenser\Interfaces\ITicketDispenser.cs" />
+    <Compile Include="TurnTicketDispenser\Interfaces\ITurnNumberSequence.cs" />
     <Compile Include="TurnTicketDispenser\TicketDispenser.cs" />
     <Compile Include="TurnTicketDispenser\TurnNumberSequence.cs" />
     <Compile Include="TurnTicketDispenser\TurnTicket.cs" />

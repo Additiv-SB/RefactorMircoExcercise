@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FakeItEasy;
+using NUnit.Framework;
 using TDDMicroExercises.TurnTicketDispenser.Interfaces;
 
 namespace TDDMicroExercises.TurnTicketDispenser.Tests
@@ -9,10 +10,12 @@ namespace TDDMicroExercises.TurnTicketDispenser.Tests
         [SetUp]
         public void Setup()
         {
-            _ticketDispenser = new TicketDispenser();
+            _turnNumberSequence = A.Fake<ITurnNumberSequence>();
+            _ticketDispenser = new TicketDispenser(_turnNumberSequence);
         }
 
         private ITicketDispenser _ticketDispenser;
+        private ITurnNumberSequence _turnNumberSequence;
 
         [Test]
         public void Should_ReturnTurnTicket_When_GetTurnTicketMethodCalled()
@@ -45,7 +48,7 @@ namespace TDDMicroExercises.TurnTicketDispenser.Tests
         [Test]
         public void Should_ReturnTwoTurnTicketsWithDifferentTurnNumbers_When_GetTurnTicketMethodCalledByTwoTicketDispensers()
         {
-            var ticketDispenser = new TicketDispenser();
+            var ticketDispenser = new TicketDispenser(_turnNumberSequence);
             var ticket1 = ticketDispenser.GetTurnTicket();
             var ticket2 = _ticketDispenser.GetTurnTicket();
 

@@ -9,9 +9,10 @@ namespace TDDMicroExercises.TurnTicketDispenser.SomeDependencies
 		public TurnNumberSequenceClient()
         {
             int nextUniqueTicketNumber;
-            nextUniqueTicketNumber = TurnNumberSequence.GetNextTurnNumber();
-			nextUniqueTicketNumber = TurnNumberSequence.GetNextTurnNumber();
-			nextUniqueTicketNumber = TurnNumberSequence.GetNextTurnNumber();
+            var turnNumberSequence = TurnNumberSequence.Instance;
+            nextUniqueTicketNumber = turnNumberSequence.GetNextTurnNumber();
+			nextUniqueTicketNumber = turnNumberSequence.GetNextTurnNumber();
+			nextUniqueTicketNumber = turnNumberSequence.GetNextTurnNumber();
 		}
     }
 }

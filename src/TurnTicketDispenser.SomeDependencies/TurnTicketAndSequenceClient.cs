@@ -8,9 +8,10 @@ namespace TDDMicroExercises.TurnTicketDispenser.SomeDependencies
 
 		public TurnTicketAndSequenceClient()
         {
-			var turnTicket1 = new TurnTicket(TurnNumberSequence.GetNextTurnNumber());
-			var turnTicket2 = new TurnTicket(TurnNumberSequence.GetNextTurnNumber());
-			var turnTicket3 = new TurnTicket(TurnNumberSequence.GetNextTurnNumber());
+            var turnNumberSequence = TurnNumberSequence.Instance;
+			var turnTicket1 = new TurnTicket(turnNumberSequence.GetNextTurnNumber());
+			var turnTicket2 = new TurnTicket(turnNumberSequence.GetNextTurnNumber());
+			var turnTicket3 = new TurnTicket(turnNumberSequence.GetNextTurnNumber());
         }
     }
 }

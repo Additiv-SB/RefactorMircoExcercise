@@ -1,10 +1,21 @@
+using System;
+using TDDMicroExercises.TurnTicketDispenser.Interfaces;
+
 namespace TDDMicroExercises.TurnTicketDispenser
 {
-    public static class TurnNumberSequence
+    public sealed class TurnNumberSequence: ITurnNumberSequence
     {
-        private static int _turnNumber = 0;
+        private int _turnNumber = 0;
 
-        public static int GetNextTurnNumber()
+        private static readonly Lazy<TurnNumberSequence> Lazy =
+            new Lazy<TurnNumberSequence>(() => new TurnNumberSequence());
+
+        public static TurnNumberSequence Instance => Lazy.Value;
+
+        private TurnNumberSequence()
+        { }
+
+        public int GetNextTurnNumber()
         {
             return _turnNumber++;
         }
