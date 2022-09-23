@@ -20,7 +20,9 @@ namespace TDDMicroExercises.TurnTicketDispenser.Tests
         [Test]
         public void Should_ReturnTurnTicket_When_GetTurnTicketMethodCalled()
         {
-            var expectedResult = new TurnTicket(0);
+            var turnNumber = 1;
+            var expectedResult = new TurnTicket(turnNumber);
+            A.CallTo(() => _turnNumberSequence.GetNextTurnNumber()).Returns(turnNumber);
             var result = _ticketDispenser.GetTurnTicket();
 
             Assert.That(result.TurnNumber, Is.EqualTo(expectedResult.TurnNumber));
@@ -38,8 +40,13 @@ namespace TDDMicroExercises.TurnTicketDispenser.Tests
         [Test]
         public void Should_ReturnTwoTurnTicketsWithDifferentTurnNumbers_When_GetTurnTicketMethodCalled()
         {
+
+            A.CallTo(() => _turnNumberSequence.GetNextTurnNumber()).Returns(1);
             var ticket1 = _ticketDispenser.GetTurnTicket();
+
+            A.CallTo(() => _turnNumberSequence.GetNextTurnNumber()).Returns(2);
             var ticket2 = _ticketDispenser.GetTurnTicket();
+
 
             Assert.That(ticket1.TurnNumber, Is.Not.EqualTo(ticket2.TurnNumber));
         }
@@ -49,10 +56,20 @@ namespace TDDMicroExercises.TurnTicketDispenser.Tests
         public void Should_ReturnTwoTurnTicketsWithDifferentTurnNumbers_When_GetTurnTicketMethodCalledByTwoTicketDispensers()
         {
             var ticketDispenser = new TicketDispenser(_turnNumberSequence);
+            A.CallTo(() => _turnNumberSequence.GetNextTurnNumber()).Returns(1);
             var ticket1 = ticketDispenser.GetTurnTicket();
+            A.CallTo(() => _turnNumberSequence.GetNextTurnNumber()).Returns(2);
             var ticket2 = _ticketDispenser.GetTurnTicket();
 
             Assert.That(ticket1.TurnNumber, Is.Not.EqualTo(ticket2.TurnNumber));
+        }
+
+        [Test]
+        public void Should_CallGetGetNextTurnNumber_When_GetTurnTicketMethodCalled()
+        {
+            _ticketDispenser.GetTurnTicket();
+
+            A.CallTo(() => _turnNumberSequence.GetNextTurnNumber()).MustHaveHappened(Repeated.Exactly.Once);
         }
     }
 }
