@@ -47,6 +47,7 @@
     <Compile Include="TelemetrySystem\TelemetryDiagnosticControls.cs" />
     <Compile Include="TirePressureMonitoringSystem\Alarm.cs" />
     <Compile Include="TirePressureMonitoringSystem\Sensor.cs" />
+    <Compile Include="TurnTicketDispenser.Tests\TurnTicketDispenserTests.cs" />
     <Compile Include="TurnTicketDispenser\Interfaces\ITicketDispenser.cs" />
     <Compile Include="TurnTicketDispenser\TicketDispenser.cs" />
     <Compile Include="TurnTicketDispenser\TurnNumberSequence.cs" />
