@@ -1,5 +1,4 @@
-﻿using System;
-namespace TDDMicroExercises.TurnTicketDispenser.SomeDependencies
+﻿namespace TDDMicroExercises.TurnTicketDispenser.SomeDependencies
 {
     public class TurnNumberSequenceClient
     {

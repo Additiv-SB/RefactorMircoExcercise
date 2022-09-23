@@ -1,7 +1,4 @@
-﻿using System;
-using System.Web.UI;
-
-namespace TDDMicroExercises.TurnTicketDispenser.SomeDependencies
+﻿namespace TDDMicroExercises.TurnTicketDispenser.SomeDependencies
 {
     public class TicketDispenserClient
     {

@@ -18,6 +18,14 @@ namespace TDDMicroExercises.TurnTicketDispenser.Tests
         private ITurnNumberSequence _turnNumberSequence;
 
         [Test]
+        public void Should_CallGetGetNextTurnNumber_When_GetTurnTicketMethodCalled()
+        {
+            _ticketDispenser.GetTurnTicket();
+
+            A.CallTo(() => _turnNumberSequence.GetNextTurnNumber()).MustHaveHappened(Repeated.Exactly.Once);
+        }
+
+        [Test]
         public void Should_ReturnTurnTicket_When_GetTurnTicketMethodCalled()
         {
             var turnNumber = 1;
@@ -40,7 +48,6 @@ namespace TDDMicroExercises.TurnTicketDispenser.Tests
         [Test]
         public void Should_ReturnTwoTurnTicketsWithDifferentTurnNumbers_When_GetTurnTicketMethodCalled()
         {
-
             A.CallTo(() => _turnNumberSequence.GetNextTurnNumber()).Returns(1);
             var ticket1 = _ticketDispenser.GetTurnTicket();
 
@@ -53,7 +60,8 @@ namespace TDDMicroExercises.TurnTicketDispenser.Tests
 
 
         [Test]
-        public void Should_ReturnTwoTurnTicketsWithDifferentTurnNumbers_When_GetTurnTicketMethodCalledByTwoTicketDispensers()
+        public void
+            Should_ReturnTwoTurnTicketsWithDifferentTurnNumbers_When_GetTurnTicketMethodCalledByTwoTicketDispensers()
         {
             var ticketDispenser = new TicketDispenser(_turnNumberSequence);
             A.CallTo(() => _turnNumberSequence.GetNextTurnNumber()).Returns(1);
@@ -62,14 +70,6 @@ namespace TDDMicroExercises.TurnTicketDispenser.Tests
             var ticket2 = _ticketDispenser.GetTurnTicket();
 
             Assert.That(ticket1.TurnNumber, Is.Not.EqualTo(ticket2.TurnNumber));
-        }
-
-        [Test]
-        public void Should_CallGetGetNextTurnNumber_When_GetTurnTicketMethodCalled()
-        {
-            _ticketDispenser.GetTurnTicket();
-
-            A.CallTo(() => _turnNumberSequence.GetNextTurnNumber()).MustHaveHappened(Repeated.Exactly.Once);
         }
     }
 }

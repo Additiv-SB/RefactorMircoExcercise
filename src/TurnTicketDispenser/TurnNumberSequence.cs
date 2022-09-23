@@ -3,17 +3,18 @@ using TDDMicroExercises.TurnTicketDispenser.Interfaces;
 
 namespace TDDMicroExercises.TurnTicketDispenser
 {
-    public sealed class TurnNumberSequence: ITurnNumberSequence
+    public sealed class TurnNumberSequence : ITurnNumberSequence
     {
-        private int _turnNumber = 0;
-
         private static readonly Lazy<TurnNumberSequence> Lazy =
             new Lazy<TurnNumberSequence>(() => new TurnNumberSequence());
 
-        public static TurnNumberSequence Instance => Lazy.Value;
+        private int _turnNumber;
 
         private TurnNumberSequence()
-        { }
+        {
+        }
+
+        public static TurnNumberSequence Instance => Lazy.Value;
 
         public int GetNextTurnNumber()
         {

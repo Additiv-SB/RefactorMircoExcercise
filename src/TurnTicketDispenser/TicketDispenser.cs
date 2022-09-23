@@ -2,7 +2,7 @@ using TDDMicroExercises.TurnTicketDispenser.Interfaces;
 
 namespace TDDMicroExercises.TurnTicketDispenser
 {
-    public class TicketDispenser: ITicketDispenser
+    public class TicketDispenser : ITicketDispenser
     {
         private readonly ITurnNumberSequence _turnNumberSequence;
 
@@ -13,7 +13,7 @@ namespace TDDMicroExercises.TurnTicketDispenser
 
         public TurnTicket GetTurnTicket()
         {
-            int newTurnNumber = _turnNumberSequence.GetNextTurnNumber();
+            var newTurnNumber = _turnNumberSequence.GetNextTurnNumber();
             var newTurnTicket = new TurnTicket(newTurnNumber);
 
             return newTurnTicket;
