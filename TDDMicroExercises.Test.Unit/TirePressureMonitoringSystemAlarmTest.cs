@@ -1,6 +1,5 @@
 using Moq;
 using TDDMicroExercises.TirePressureMonitoringSystem;
-using TDDMicroExercises.TirePressureMonitoringSystem.SomeDependencies;
 
 namespace TDDMicroExercises.Test.Unit
 {
