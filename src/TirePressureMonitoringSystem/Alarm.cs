@@ -7,10 +7,15 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
 
         private readonly ISensor _sensor;
 
+        public Alarm() :this(new Sensor())
+        {
+        }
+
         public Alarm(ISensor sensor)
         {
             _sensor = sensor;
         }
+
         bool _alarmOn = false;
 
         public void Check()

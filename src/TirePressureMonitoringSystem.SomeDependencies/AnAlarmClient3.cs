@@ -6,12 +6,10 @@
         // that has impact on the refactoring.
 
         private readonly Alarm _anAlarm;
-        private readonly ISensor _sensor;
 
-        public AnAlarmClient3(ISensor sensor)
+        public AnAlarmClient3()
         {
-            _sensor = sensor;
-            _anAlarm = new Alarm(_sensor);
+            _anAlarm = new Alarm();
         }
 
         public void DoSomething()

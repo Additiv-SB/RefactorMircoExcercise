@@ -4,16 +4,15 @@
     {
         // A class with the only goal of simulating a dependency on Sensor
         // that has impact on the refactoring.
-        private readonly ISensor _sensor;
 
-        public ASensorClient(ISensor sensor)
+        public ASensorClient()
         {
-            _sensor = sensor;
+            Sensor sensor = new Sensor();
 
-            double value = _sensor.PopNextPressurePsiValue();
-            value = _sensor.PopNextPressurePsiValue();
-            value = _sensor.PopNextPressurePsiValue();
-            value = _sensor.PopNextPressurePsiValue();
+            double value = sensor.PopNextPressurePsiValue();
+            value = sensor.PopNextPressurePsiValue();
+            value = sensor.PopNextPressurePsiValue();
+            value = sensor.PopNextPressurePsiValue();
             
         }
     }
