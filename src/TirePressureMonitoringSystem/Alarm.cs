@@ -2,18 +2,20 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
 {
     public class Alarm
     {
-        private const double LowPressureThreshold = 17;
-        private const double HighPressureThreshold = 21;
 
         private readonly ISensor _sensor;
+        private  readonly AlarmProperties _alarmProperties;
 
-        public Alarm() :this(new Sensor())
+        public Alarm()
         {
+            _sensor = new Sensor();
+            _alarmProperties = new AlarmProperties();
         }
 
         public Alarm(ISensor sensor)
         {
             _sensor = sensor;
+            _alarmProperties = new AlarmProperties();
         }
 
         bool _alarmOn = false;
@@ -22,7 +24,7 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
         {
             double psiPressureValue = _sensor.PopNextPressurePsiValue();
 
-            if (psiPressureValue < LowPressureThreshold || HighPressureThreshold < psiPressureValue)
+            if (psiPressureValue < _alarmProperties.LowPressureThreshold || _alarmProperties.HighPressureThreshold < psiPressureValue)
             {
                 _alarmOn = true;
             }

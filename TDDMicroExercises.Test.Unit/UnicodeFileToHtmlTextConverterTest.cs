@@ -7,7 +7,7 @@ public class UnicodeFileToHtmlTextConverterTest
     /// Test method to assure that a new line is added when it's needed after Converting to HTML
     /// </summary>
     [TestMethod]
-    public void AddingANewLineSuccessfully()
+    public void AddingNewLineSuccessfully()
     {
         //Arrange
         string initialText = "First Line\nSecond Line\nThird Line";
@@ -24,6 +24,9 @@ public class UnicodeFileToHtmlTextConverterTest
         Assert.AreEqual(expected, result);
     }
 
+    /// <summary>
+    /// Test method for converting the &-ampersand sign
+    /// </summary>
     [TestMethod]
     public void ConvertAmpersandSuccessfully()
     {

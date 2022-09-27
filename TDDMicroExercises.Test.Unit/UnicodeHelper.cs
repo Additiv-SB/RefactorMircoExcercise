@@ -12,7 +12,7 @@ namespace TDDMicroExercises.Test.Unit
         }
 
         /// <summary>
-        /// Helper for TestMethod to return the provided string
+        /// Helper for testing methods to return the provided string
         /// </summary>
         /// <returns></returns>
         TextReader IUnicodeTextPath.ReadText()
