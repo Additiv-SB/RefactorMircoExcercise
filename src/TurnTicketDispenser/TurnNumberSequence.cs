@@ -6,7 +6,7 @@ namespace TDDMicroExercises.TurnTicketDispenser
 
         public static int GetNextTurnNumber()
         {
-            return _turnNumber++;
+            return ++_turnNumber;
         }
     }
 }
