@@ -11,6 +11,10 @@ namespace TDDMicroExercises.Test.Unit
             _text = text;
         }
 
+        /// <summary>
+        /// Helper for TestMethod to return the provided string
+        /// </summary>
+        /// <returns></returns>
         TextReader IUnicodeTextPath.ReadText()
         {
             return new StringReader(_text);

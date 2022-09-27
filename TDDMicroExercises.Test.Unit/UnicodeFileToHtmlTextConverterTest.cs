@@ -7,7 +7,7 @@ public class UnicodeFileToHtmlTextConverterTest
     /// Test method to assure that a new line is added when it's needed after Converting to HTML
     /// </summary>
     [TestMethod]
-    public void AddNewLine()
+    public void AddingANewLineSuccessfully()
     {
         //Arrange
         string initialText = "First Line\nSecond Line\nThird Line";
@@ -16,12 +16,29 @@ public class UnicodeFileToHtmlTextConverterTest
         var mockString = new UnicodeHelper();
         mockString.GetText(initialText);
 
-        var convert = new UnicodeFileToHtmlTextConverter.UnicodeFileToHtmlTextConverter(mockString);
-
         //Act
+        var convert = new UnicodeFileToHtmlTextConverter.UnicodeFileToHtmlTextConverter(mockString);
         string result = convert.ConvertToHtml();
 
         //Assert
         Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    public void ConvertAmpersandSuccessfully()
+    {
+        //Arrange
+        string initialText = "Wash & Go";
+        string expectedText = "Wash &amp; Go<br />";
+
+        var mockString = new UnicodeHelper();
+        mockString.GetText(initialText);
+
+        //Act
+        var convert = new UnicodeFileToHtmlTextConverter.UnicodeFileToHtmlTextConverter(mockString);
+        string result = convert.ConvertToHtml();
+
+        //Assert
+        Assert.AreEqual(expectedText, result);
     }
 }
