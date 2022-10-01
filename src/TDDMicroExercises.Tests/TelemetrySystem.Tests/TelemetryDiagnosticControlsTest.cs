@@ -10,33 +10,17 @@ namespace TDDMicroExercises.Tests.TelemetrySystem.Tests
         [Fact]
         public void CheckTransmission_should_send_a_diagnostic_message_and_receive_a_status_message_response()
         {
-            string status_message_response = "This is the response message";
-
-            // Arrange
-            ITelemetryClient _telemetryClient = Substitute.For<ITelemetryClient>();
-            ITelemetryDiagnosticControls tdc = new TelemetryDiagnosticControls(_telemetryClient);
-
-            _telemetryClient.OnlineStatus.Returns(false);
-            _telemetryClient.When(call => call.Connect(Arg.Any<string>())).Do(arg => _telemetryClient.OnlineStatus.Returns(true));
-            _telemetryClient.Receive().Returns(status_message_response);
-
-            // Act
-            tdc.CheckTransmission();
-
-            // Assert
-            tdc.DiagnosticInfo.Should().Be(status_message_response);
-
-            _telemetryClient.Received(2).Disconnect();
-
-            _telemetryClient.Received(1).Connect(Arg.Any<string>());
-
-            _telemetryClient.Received(1).Send(Arg.Any<string>());
-
-            _telemetryClient.Received(1).Receive();
+            CheckTransmission_successfully_connected(1);
         }
 
         [Fact]
-        public void CheckTransmission_fail_3_times_to_connect()
+        public void CheckTransmission_should_successfully_connect_on_the_third_attempt()
+        {
+            CheckTransmission_successfully_connected(3);
+        }
+
+        [Fact]
+        public void CheckTransmission_should_fail_3_times_to_connect_and_throw_a_error_message()
         {
             // Arrange
             ITelemetryClient _telemetryClient = Substitute.For<ITelemetryClient>();
@@ -58,5 +42,40 @@ namespace TDDMicroExercises.Tests.TelemetrySystem.Tests
 
             _telemetryClient.DidNotReceive().Receive();
         }
+
+        // private
+        #region private
+
+        private void CheckTransmission_successfully_connected(int attemptsToConnect)
+        {
+            int retryCount = 0;
+            string status_message_response = "This is the response message";
+
+            // Arrange
+            ITelemetryClient _telemetryClient = Substitute.For<ITelemetryClient>();
+            ITelemetryDiagnosticControls tdc = new TelemetryDiagnosticControls(_telemetryClient);
+
+            _telemetryClient.OnlineStatus.Returns(false);
+            _telemetryClient.Receive().Returns(status_message_response);
+            _telemetryClient.When(call => call.Connect(Arg.Any<string>()))
+                .Do(arg =>
+                    _telemetryClient.OnlineStatus.Returns(++retryCount == attemptsToConnect));
+
+            // Act
+            tdc.CheckTransmission();
+
+            // Assert
+            tdc.DiagnosticInfo.Should().Be(status_message_response);
+
+            _telemetryClient.Received(2).Disconnect();
+
+            _telemetryClient.Received(attemptsToConnect).Connect(Arg.Any<string>());
+
+            _telemetryClient.Received(1).Send(Arg.Any<string>());
+
+            _telemetryClient.Received(1).Receive();
+        }
+
+        #endregion
     }
 }
