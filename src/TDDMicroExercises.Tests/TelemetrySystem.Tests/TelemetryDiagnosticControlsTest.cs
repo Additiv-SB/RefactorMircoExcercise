@@ -20,7 +20,7 @@ namespace TDDMicroExercises.Tests.TelemetrySystem.Tests
         }
 
         [Fact]
-        public void CheckTransmission_should_fail_3_times_to_connect_and_throw_a_error_message()
+        public void CheckTransmission_should_fail_3_times_to_connect_and_throw_an_error_message()
         {
             // Arrange
             ITelemetryClient _telemetryClient = Substitute.For<ITelemetryClient>();

@@ -36,33 +36,46 @@ namespace TDDMicroExercises.TelemetrySystem
         {
             _diagnosticInfo = string.Empty;
 
+            _telemetryClient.Disconnect();
+
+            // Connect
             try
             {
-                _telemetryClient.Disconnect();
-
                 int retryLeft = 3;
                 while (_telemetryClient.OnlineStatus == false && retryLeft > 0)
                 {
                     _telemetryClient.Connect(DiagnosticChannelConnectionString);
                     retryLeft -= 1;
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Fail to connect: {ex.Message}");
+            }
 
-                if (_telemetryClient.OnlineStatus == false)
-                {
-                    throw new Exception("Unable to connect.");
-                }
+            if (_telemetryClient.OnlineStatus == false)
+            {
+                throw new Exception("Unable to connect.");
+            }
 
+            // Send message
+            try
+            {
                 _telemetryClient.Send(TelemetryClient.DiagnosticMessage);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Fail to send message: {ex.Message}");
+            }
 
+            // Receive reponse message
+            try
+            {
                 _diagnosticInfo = _telemetryClient.Receive();
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
-            }
-            finally
-            {
-                _telemetryClient.Disconnect();
+                throw new Exception($"Fail to receive message: {ex.Message}");
             }
         }
         #endregion
