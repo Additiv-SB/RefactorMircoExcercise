@@ -2,10 +2,10 @@ using System;
 
 namespace TDDMicroExercises.TelemetrySystem
 {
-    public class TelemetryDiagnosticControls : ITelemetryDiagnosticControls
+    public sealed class TelemetryDiagnosticControls : ITelemetryDiagnosticControls
     {
         // Private Properties
-        #region Private Variable
+        #region Private Properties
         private const string DiagnosticChannelConnectionString = "*111#";
         
         private readonly ITelemetryClient _telemetryClient;
