@@ -34,7 +34,7 @@ namespace TDDMicroExercises.Tests.TelemetrySystem.Tests
             // Assert
             act.Should().Throw<Exception>().WithMessage("Unable to connect.");
 
-            _telemetryClient.Received(2).Disconnect();
+            _telemetryClient.Received(1).Disconnect();
 
             _telemetryClient.Received(3).Connect(Arg.Any<string>());
 
@@ -67,7 +67,7 @@ namespace TDDMicroExercises.Tests.TelemetrySystem.Tests
             // Assert
             tdc.DiagnosticInfo.Should().Be(status_message_response);
 
-            _telemetryClient.Received(2).Disconnect();
+            _telemetryClient.Received(1).Disconnect();
 
             _telemetryClient.Received(attemptsToConnect).Connect(Arg.Any<string>());
 
