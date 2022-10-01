@@ -24,15 +24,39 @@ namespace TDDMicroExercises.Tests.TelemetrySystem.Tests
             tdc.CheckTransmission();
 
             // Assert
-            _telemetryClient.Received().Disconnect();
-
-            _telemetryClient.Received().Connect(Arg.Any<string>());
-
-            _telemetryClient.Received().Send(Arg.Any<string>());
-
-            _telemetryClient.Received().Receive();
-
             tdc.DiagnosticInfo.Should().Be(status_message_response);
+
+            _telemetryClient.Received(2).Disconnect();
+
+            _telemetryClient.Received(1).Connect(Arg.Any<string>());
+
+            _telemetryClient.Received(1).Send(Arg.Any<string>());
+
+            _telemetryClient.Received(1).Receive();
+        }
+
+        [Fact]
+        public void CheckTransmission_fail_3_times_to_connect()
+        {
+            // Arrange
+            ITelemetryClient _telemetryClient = Substitute.For<ITelemetryClient>();
+            ITelemetryDiagnosticControls tdc = new TelemetryDiagnosticControls(_telemetryClient);
+
+            _telemetryClient.OnlineStatus.Returns(false);
+
+            // Act
+            Action act = () => tdc.CheckTransmission();
+
+            // Assert
+            act.Should().Throw<Exception>().WithMessage("Unable to connect.");
+
+            _telemetryClient.Received(2).Disconnect();
+
+            _telemetryClient.Received(3).Connect(Arg.Any<string>());
+
+            _telemetryClient.DidNotReceive().Send(Arg.Any<string>());
+
+            _telemetryClient.DidNotReceive().Receive();
         }
     }
 }
