@@ -17,6 +17,8 @@ namespace TDDMicroExercises.Tests.TelemetrySystem.Tests
 
             // Assert
             act.Should().NotThrow();
+
+            tdc.DiagnosticInfo.Should().NotBe(string.Empty);
         }
     }
 }
