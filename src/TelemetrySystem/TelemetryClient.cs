@@ -2,8 +2,8 @@ using System;
 
 namespace TDDMicroExercises.TelemetrySystem
 {
-	public class TelemetryClient
-	{
+	public class TelemetryClient : ITelemetryClient
+    {
         //
         // The communication with the server is simulated in this implementation.
         // Because the focus of the exercise is on the other class.
