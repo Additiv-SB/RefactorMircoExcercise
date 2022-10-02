@@ -8,9 +8,7 @@ namespace TDDMicroExercises.Tests.TirePressureMonitoringSystem.Tests
     public sealed class AlarmTest
     {
         [Theory]
-        [InlineData(22)]
-        [InlineData(23)]
-        [InlineData(24)]
+        [InlineData(21.1)]
         public void Check_should_verify_pressure_value_above_high_pressure_and_set_alarme_on(double pressureValue)
         {
             // Arrange
@@ -27,9 +25,7 @@ namespace TDDMicroExercises.Tests.TirePressureMonitoringSystem.Tests
         }
 
         [Theory]
-        [InlineData(16)]
-        [InlineData(15)]
-        [InlineData(14)]
+        [InlineData(16.9)]
         public void Check_should_verify_pressure_value_below_low_pressure_and_set_alarme_on(double pressureValue)
         {
             // Arrange
@@ -47,9 +43,8 @@ namespace TDDMicroExercises.Tests.TirePressureMonitoringSystem.Tests
 
         [Theory]
         [InlineData(17)]
-        [InlineData(18)]
-        [InlineData(19)]
-        [InlineData(20)]
+        [InlineData(17.1)]
+        [InlineData(20.9)]
         [InlineData(21)]
         public void Check_should_verify_pressure_value_is_normal_and_set_alarme_off(double pressureValue)
         {
