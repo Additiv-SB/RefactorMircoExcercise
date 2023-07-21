@@ -15,7 +15,7 @@ When you have some kind of test to lean on, refactor the code and make it testab
 Apply the unit testing style and framework you are most comfortable with. You can choose to use stubs or mocks or none at all. If you do, you are free to use the mocking tool that you prefer.
 
 ## Please include git history
-If the git history is not included it will impact the assesment negtively. 
+If the git history is not included it will impact the assessment negatively.
 
 #### 1. **TirePressureMonitoringSystem exercise**:
 Write the unit tests for the Alarm class, refactor the code as much as you need to make the class testable.
