@@ -6,9 +6,8 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem.SomeDependencies
 		// A class with the only goal of simulating a dependency on Alert
 		// that has impact on the refactoring.
 		
-        public AnAlarmClient1()
+        public AnAlarmClient1(Alarm anAlarm)
         {
-            Alarm anAlarm = new Alarm();
             anAlarm.Check();
             bool isAlarmOn = anAlarm.AlarmOn;
         }

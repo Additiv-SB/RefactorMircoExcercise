@@ -3,14 +3,17 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem.SomeDependencies
 {
     public class AnAlarmClient2
     {
-		// A class with the only goal of simulating a dependency on Alert
-		// that has impact on the refactoring.
-		
-        private void DoSomething()
+        private readonly Alarm _anAlarm;
+        // A class with the only goal of simulating a dependency on Alert
+        // that has impact on the refactoring.
+        public AnAlarmClient2(Alarm anAlarm)
         {
-            Alarm anAlarm = new Alarm();
-            anAlarm.Check();
-            bool isAlarmOn = anAlarm.AlarmOn;
+            _anAlarm = anAlarm;
+        }
+        private void DoSomething()
+        {           
+            _anAlarm.Check();
+            bool isAlarmOn = _anAlarm.AlarmOn;
         }
     }
 }

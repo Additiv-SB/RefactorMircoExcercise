@@ -1,13 +1,21 @@
 namespace TDDMicroExercises.TirePressureMonitoringSystem
 {
+    /* Dependency Inversion Principle Violation:
+    It was directly dependent on  sensor
+    which made it hard to mock the sensor during testing.*/
     public class Alarm
     {
         private const double LowPressureThreshold = 17;
         private const double HighPressureThreshold = 21;
 
-        readonly Sensor _sensor = new Sensor();
+        private readonly ISensor _sensor;
 
         bool _alarmOn = false;
+
+        public Alarm(ISensor sensor)
+        {
+            _sensor = sensor;
+        }
 
         public void Check()
         {

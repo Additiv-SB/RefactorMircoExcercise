@@ -8,9 +8,9 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem.SomeDependencies
 
         private Alarm _anAlarm;
 
-        public AnAlarmClient3()
+        public AnAlarmClient3(Alarm anAlarm)
         {
-            _anAlarm = new Alarm();
+            _anAlarm = anAlarm;
         }
 
         public void DoSomething() 
